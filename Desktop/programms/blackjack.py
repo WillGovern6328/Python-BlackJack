@@ -697,6 +697,7 @@ while Game == True:
 # gambleing: complete
 # add buy in: complete
 # rebuy
+#cant bet more than you have
 #add wins and losses
 # add win percent
 # add card count
