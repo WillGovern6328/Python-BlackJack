@@ -702,8 +702,3 @@ while Game == True:
 # add card count
 # add reshuffle
 
-# git change test 
-
-#git
-
-#third commit
