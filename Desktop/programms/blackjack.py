@@ -702,6 +702,3 @@ while Game == True:
 # add card count
 # add reshuffle
 
-#git add
-
-#git hub add plz
