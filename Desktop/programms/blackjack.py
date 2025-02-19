@@ -10,10 +10,18 @@ console = Console()
 
 HowManyChips = ("\n[white]How Many Dallars Worth of Chips Would You Like to Buy[/white]")
 YourBalence = ("\nYour Bance:")
+RefillPrompt = ("\n[white]Your Out Of Chips, How Many Dallars Worth of Chips Would You Like to Buy[/white]")
+NotEnouphChips = ("\n[white]You Dont Have Enouph Chips to Make That Bet[/white]")
+SeeSatsPrompt = ("\n[white]Would You Like to See Your Game Stats[/white]")
 
 ChipTotal = int(input(console.print(HowManyChips)))
+time.sleep(1)
 
 console.print(YourBalence,"$",ChipTotal)
+time.sleep(1)
+
+Wins = 0
+Losses = 0
 
 while Game == True:
     YourCardsTitle = ("[underline][blue]Your Cards[/blue][/underline]")
@@ -42,6 +50,7 @@ while Game == True:
     PlayerBlackJack = False
     DealerBlackJack = False
     BlackJackCalus = False
+    YourBetPass = False
 
     YouPulled=("\n[blue]You Pulled[/blue]")
     YourCardValue = ("\n[blue]Your Card Value:[/blue]")
@@ -152,7 +161,29 @@ while Game == True:
     AceOfSpades =WhiteA+Spade
     AceOfDimonds =RedA+Diomond
 
+    if ChipTotal == 0:
+        Refill = int(input(console.print(RefillPrompt)))
+        time.sleep(1)
+        ChipTotal = ChipTotal + Refill
+        console.print(YourBalence,"$",ChipTotal)
+        time.sleep(1)
+
+
     YourBet = int(input(console.print(BetPrompt)))
+    time.sleep(1)
+
+    while YourBetPass == False:
+        
+        if YourBet > ChipTotal:
+            console.print(NotEnouphChips)
+            time.sleep(1)
+            YourBet = int(input(console.print(BetPrompt)))
+            time.sleep(1)
+            YourBetPass = False
+        
+        if YourBet <= ChipTotal:
+            YourBetPass = True
+
 
     def LostBet():
         YourWin = 0 - YourBet
@@ -617,32 +648,38 @@ while Game == True:
         console.print(YouLose)
         time.sleep(1)
         LostBet()
-        YourWin = LostBet() 
+        YourWin = LostBet()
+        Losses = Losses + 1
     if Bust == True:
         console.print(YouLose)
         time.sleep(1)
         LostBet()
         YourWin = LostBet()
+        Losses = Losses + 1
     if DealerBlackJack == True and PlayerBlackJack == False:
         console.print(YouLose)
         time.sleep(1)
         LostBet()
         YourWin = LostBet()
+        Losses = Losses + 1
     if DealersDrawValueTotal < YourDrawValueTotal and Bust == False and PlayerBlackJack == False:
         console.print(YouWin)
         time.sleep(1)
         WonBet()
         YourWin = WonBet()
+        Wins = Wins + 1
     if DealerBust == True:
         console.print(YouWin)
         time.sleep(1)
         WonBet()
         YourWin = WonBet()
+        Wins = Wins + 1
     if PlayerBlackJack == True and DealerBlackJack == False:
         console.print(YouWin)
         time.sleep(1)
         BlackJackBet()
         YourWin = BlackJackBet()
+        Wins = Wins + 1
     if DealersDrawValueTotal == YourDrawValueTotal and BlackJackCalus == False:
         console.print(Push)
         time.sleep(1)
@@ -665,12 +702,32 @@ while Game == True:
     ChipTotal = ChipTotal + YourWin
     console.print(YourBalence,"$",ChipTotal)
 
+    WinPersentage = Wins/Losses
+
+    SeeStats = input(console.print(SeeSatsPrompt)).strip().lower()
+    time.sleep(1)
+
+    if SeeStats == "yes":
+        console.print(YourWinPersentage, WinPersentage)
+        console.print(YourWins, Wins)
+        console.print(YourLosses, Losses)
+        console.print(TheCardCount, CardCount)
+        time.sleep(2)
+    
+    elif SeeStats == "no":
+        console.print(WillNotShowStats)
+        time.sleep(1)
+    
+    else:
+        console.print(InvaledInput)
+        time.sleep(1)
     
     PlayAgainPrompt = True
     
     while PlayAgainPrompt == True:
 
         playagain = input(console.print(WouldYouLikeToPlay)).strip().lower()
+        time.sleep(1)
 
         if playagain == "yes":
             Game = True
@@ -696,8 +753,8 @@ while Game == True:
 # play again: complete
 # gambleing: complete
 # add buy in: complete
-# rebuy
-#cant bet more than you have
+# rebuy: complete
+#cant bet more than you have:complete
 #add wins and losses
 # add win percent
 # add card count
